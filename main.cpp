@@ -1,123 +1,53 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 #include <iostream>
-using namespace std;
+#include "Student.h"
 
-int myAtoi(char *s)
-{
-    int rez = 0, i=0;
-
-    while (s[i] != '\0')
-    {
-        if (s[i] >= '0' && s[i] <= '9')
-            rez = rez * 10 + (s[i] - '0');
-        i++;
-    }
-
-    return rez;
-}
-
-void ex1()
-{
-    FILE *file;
-    int sum = 0;
-    char buffer[100];
-
-    fopen_s(&file, "in.txt", "r");
-
-    if (file == NULL) {
-        printf("Error opening file!\n");
-        return;
-    }
-
-
-    while (fgets(buffer, sizeof(buffer), file) != NULL)
-        {
-            int nr = myAtoi(buffer);
-            sum += nr;
-        }
-
-
-    fclose(file);
-    printf("%d\n", sum);
-
-}
-
-void ex2()
-{
-   char s[100];
-   char cuv[100][100];
-   int nr=0;
-
-   printf("Introduceti o propozitie: ");
-   cin.getline(s, 100);
-
-   char *p;
-   p=strtok(s, " ");
-   while(p!=NULL)
-   {
-        strcpy(cuv[nr], p);
-        nr++;
-        p=strtok(NULL, " ");
-   }
-
-    int ok=0;
-
-   for (int i=0; i<nr-1; i++)
-    for (int j=0; j<nr-i-1; j++)
-    {
-        if(strlen(cuv[j])<strlen(cuv[j+1]))
-            ok=1;
-
-        if(strlen(cuv[j])== strlen(cuv[j+1]))
-            if (strcmp(cuv[j], cuv[j+1])>0)
-                ok=1;
-
-        if(ok==1)
-        {
-            char temp[100];
-            strcpy(temp, cuv[j]);
-            strcpy(cuv[j],cuv[j+1]);
-            strcpy(cuv[j+1],temp);
-        }
-
-        ok=0;
-    }
-
-    printf("\nCuvintele sortate:\n");
-    for (int i = 0; i < nr; i++) {
-        printf("%s\n", cuv[i]);
-    }
-
-}
-
-
-bool isPrime(int n)
-{
-    for (int tr = 2; tr < n / tr; tr++)
-        if ((n % tr) == 0)
-            return false;
-    return true;
-}
 int main()
 {
-    int n;
-    std::cout << "Enter a number: ";
-    std::cin >> n;
-    if (isPrime(n))
-        std::cout << n << " is prime !\n";
-    else
-        std::cout << n << " is NOT prime !\n";
+    student elev1;
+    elev1.SetName("Lionel Messi");
+    elev1.SetNotaMate(10);
+    elev1.SetNotaEngleza(10);
+    elev1.SetNotaIstorie(10);
+    std::cout<<elev1.GetName()<<" Are media: "<<elev1.Medie()<<std::endl;
 
-    std::cin.ignore();
+    student elev2;
+    elev2.SetName("Cristiano Ronaldo");
+    elev2.SetNotaMate(7);
+    elev2.SetNotaEngleza(7);
+    elev2.SetNotaIstorie(7);
+    std::cout<<elev2.GetName()<<" Are media: "<<elev2.Medie()<<std::endl;
 
-    std::cout << "\n Exercitiul 1" << std::endl;
-    ex1();
+    int rezultatNume=ComparaNume(elev1,elev2);
+    if (rezultatNume==1)
+        std::cout<<"Messi>Ronaldo"<<std::endl;
+    if(rezultatNume==0)
+        std::cout<<"Messi=Ronaldo"<<std::endl;
+    if(rezultatNume==-1)
+        std::cout<<"Messi<Ronaldo"<<std::endl;
 
-    std::cout << "\n Exercitiul 2 " << std::endl;
-    ex2();
+    int rezultatMate=ComparaMate(elev1,elev2);
+    if(rezultatMate==1)
+        std::cout<<"Messi>Ronaldo"<<std::endl;
+    if(rezultatMate==0)
+        std::cout<<"Messi=Ronaldo"<<std::endl;
+    if(rezultatMate==-1)
+        std::cout<<"Messi<Ronaldo"<<std::endl;
 
-    return 0;
+    int rezultatEngleza=ComparaEngleza(elev1,elev2);
+    if(rezultatEngleza==1)
+        std::cout<<"Messi>Ronaldo"<<std::endl;
+    if(rezultatEngleza==0)
+        std::cout<<"Messi=Ronaldo"<<std::endl;
+    if(rezultatEngleza==-1)
+        std::cout<<"Messi<Ronaldo"<<std::endl;
+
+    int rezultatIstorie=ComparaIstorie(elev1,elev2);
+    if(rezultatIstorie==1)
+        std::cout<<"Messi>Ronaldo"<<std::endl;
+    if(rezultatIstorie==0)
+        std::cout<<"Messi=Ronaldo"<<std::endl;
+    if(rezultatIstorie==-1)
+        std::cout<<"Messi<Ronaldo"<<std::endl;
+return 0;
 }
 
